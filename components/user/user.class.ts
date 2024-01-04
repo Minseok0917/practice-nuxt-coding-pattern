@@ -1,27 +1,17 @@
-import { plainToInstance } from "class-transformer";
-
 class IUserFactory {}
 
-class User {
-  name!: string;
-  age!: number;
-}
+export class User {
+  private name!: string;
+  private age!: number;
 
-const users = [
-  {
-    user_name: "정민석",
-    age: 21,
-  },
-  {
-    user_name: "권규량",
-    age: 21,
-  },
-  {
-    user_name: "윤장혁",
-    age: 21,
-  },
-];
+  get getUser() {
+    return {
+      name: this.name,
+      age: this.age,
+    };
+  }
 
-export function init() {
-  const a: User[] = plainToInstance(User, users);
+  setName(name: string) {
+    this.name = name;
+  }
 }
