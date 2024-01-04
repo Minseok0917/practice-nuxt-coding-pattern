@@ -1,10 +1,10 @@
-import { Expose, plainToInstance } from "class-transformer";
+import { plainToInstance } from "class-transformer";
 
 class IUserFactory {}
 
 class User {
-  @Expose({ name: "user_name" }) name!: string;
-  @Expose({ name: "age" }) age!: number;
+  name!: string;
+  age!: number;
 }
 
 const users = [
@@ -24,5 +24,4 @@ const users = [
 
 export function init() {
   const a: User[] = plainToInstance(User, users);
-  console.log(a);
 }
