@@ -1,8 +1,5 @@
 import { Core, CoreProxyFactory } from "./core.js";
 
-class IComputedTypeFactory {
-  read() {}
-}
 class ComputedFunctionFactory {
   constructor(computedFunction) {
     const state = { value: null };
@@ -16,7 +13,23 @@ class ComputedFunctionFactory {
     });
   }
 }
-class ComputedObjectFactory {}
+class ComputedObjectFactory {
+  constructor(computedObject) {
+    const state = { value: null };
+
+    Core.addEffect(() => {
+      state.value = computedObject.get();
+      Core.trigger(state, "value");
+    });
+    return Object.defineProperty({}, "value", {
+      get: () => CoreProxyFactory.proxyGetter(state, "value"),
+      set: (value) => {
+        computedObject.set(value);
+        CoreProxyFactory.proxySetter(state, "value", state.value);
+      },
+    });
+  }
+}
 
 class ComputedFactory {
   static factorys = new Map();
