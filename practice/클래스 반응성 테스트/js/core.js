@@ -17,79 +17,30 @@ class Core {
   }
 }
 
-function ref(value) {
-  const instance = {
-    get value() {
-      track(instance, "value");
-      return value;
-    },
-    set value(newValue) {
-      value = newValue;
-      trigger(instance, "value");
-    },
-  };
-  return instance;
+class CoreProxyFactory {
+  static proxyGetter(target, key) {
+    Core.track(target, key);
+    return target[key];
+  }
+  static proxySetter(target, key, value) {
+    target[key] = value;
+    Core.trigger(target, key);
+  }
 }
-function reactive(value) {
-  const instance = new Proxy(value, {
-    get(target, key) {
-      track(target, key);
-      return target[key];
-    },
-    set(target, key, newValue) {
-      target[key] = newValue;
-      trigger(target, key);
-      return target[key];
-    },
+
+export function shallowRef(initialValue) {
+  // object get, set 은 : 으로 표시가 불가능해서 별로 이쁘지 않아서 한 줄처리되는 defineProperty로 작성
+  const state = { value: initialValue };
+  return Object.defineProperty({}, "value", {
+    get: () => CoreProxyFactory.proxyGetter(state, "value"),
+    set: (value) => CoreProxyFactory.propertySetter(state, "value", value),
   });
-  return instance;
+}
+export function shallowReactive(initialObject) {
+  return new Proxy(initialObject, {
+    get: CoreProxyFactory.proxyGetter,
+    set: CoreProxyFactory.proxySetter,
+  });
 }
 
-const computedFactorys = new Map();
-computedFactorys.set("function", computedFunctionFactory);
-computedFactorys.set("object", computedObjectFactory);
-function computed(update) {
-  const shouldFactory = computedFactorys.get(typeof update);
-  if (!shouldFactory) throw new Error("지원하지 않는 타입입니다.");
-
-  const factoryInstance = shouldFactory(update);
-  return factoryInstance;
-}
-
-function computedFunctionFactory(updateFunction) {
-  let value;
-  const instance = {
-    get value() {
-      track(instance, "value");
-      return value;
-    },
-  };
-  activeEffect = () => {
-    value = updateFunction();
-    trigger(instance, "value");
-  };
-  activeEffect();
-  activeEffect = null;
-  return instance;
-}
-function computedObjectFactory(updateObject) {
-  let value;
-  const instance = {
-    get value() {
-      value = updateObject.get();
-      track(instance, "value");
-      return value;
-    },
-    set value(newValue) {
-      updateObject.set(newValue);
-      trigger(instance, "value");
-    },
-  };
-  activeEffect = () => {
-    value = updateObject.get();
-    trigger(instance, "value");
-  };
-  activeEffect();
-  activeEffect = null;
-  return instance;
-}
+shallowRef("dsasd");
