@@ -16,3 +16,19 @@ name.value = "민석02";
 reactivityChecked();
 introduceB.value = "민석2024";
 reactivityChecked();
+
+class User {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  getName() {
+    return this.name;
+  }
+}
+
+const a = shallowReactive([new User("철수", 10), new User("유리", 1), new User("맹구", 2), new User("훈이", 4)]);
+const b = computed(() => a.map((user) => user.getName()));
+
+console.log(a, b.value);
