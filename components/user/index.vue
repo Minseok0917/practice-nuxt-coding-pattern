@@ -21,7 +21,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { plainToInstance } from "class-transformer";
+// import { plainToInstance } from "class-transformer";
 // import { User } from "./user.class";
 // const users: User[] = plainToInstance(User, [
 //   {
@@ -40,7 +40,7 @@ import { plainToInstance } from "class-transformer";
 
 // const reactiveUsers = reactive<User[]>(users);
 
-class User {
+/* class User {
   constructor(name, age) {
     this.name = name;
     this.age = age;
@@ -62,7 +62,7 @@ setTimeout(function () {
   //   a.value.lists ||= [];
   //   a.value.lists.push(1);
 }, 1000);
-
+ */
 /* class MyClass {
   constructor() {
     this.entries = ["a"];

@@ -1,10 +1,13 @@
 {
   // https://nuxt.com/docs/guide/concepts/typescript
+  "extends": "./.nuxt/tsconfig.json",
+  "buildOptions": {
+    "types": ["@types/node", "@nuxt/types"]
+  },
   "compilerOptions": {
     // 데코레이터를 사용하는 경우 true로 설정
-    "experimentalDecorators": true,
+    // "experimentalDecorators": true
     // 브라우저에서 구문 분석 오류가 발생하는 경우 true로 설정
-    "useDefineForClassFields": true
-  },
-  "extends": "./.nuxt/tsconfig.json"
+    // "useDefineForClassFields": true
+  }
 }

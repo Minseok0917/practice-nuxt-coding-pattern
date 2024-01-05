@@ -1,7 +1,4 @@
 <template>
-  <div>
-    <h1>Index</h1>
-    <User />
-  </div>
+  <DrawingBoard />
 </template>
 <script setup></script>
