@@ -52,11 +52,22 @@ function useDrawingCanvas(parentElementId: string) {
       state.pageY += y - state.position.y;
       state.position.x = x;
       state.position.y = y;
+      rendering();
     });
     $canvas.addEventListener("mouseup", function () {
       if (!state.position) return;
       state.position = null;
+      rendering();
     });
+
+    function rendering() {
+      context.clearRect(0, 0, $canvas.width, $canvas.height);
+      // const shapes = [{ pageX: 100, pageY: 200, width: 200, height: 200, fill: "red", type: "rect" }];
+      context.beginPath();
+      context.rect(state.pageX - 100, state.pageY - 200, 200, 200);
+      context.fillStyle = "red";
+      context.fill();
+    }
 
     $parentElement.append($canvas);
   });
