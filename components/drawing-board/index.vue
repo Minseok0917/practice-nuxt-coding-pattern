@@ -14,6 +14,10 @@ function useDrawingCanvas(parentElementId: string) {
 
     $canvas.width = $parentElement.offsetWidth;
     $canvas.height = $parentElement.offsetHeight;
+    window.addEventListener("resize", function () {
+      $canvas.width = $parentElement.offsetWidth;
+      $canvas.height = $parentElement.offsetHeight;
+    });
 
     $parentElement.append($canvas);
   });
