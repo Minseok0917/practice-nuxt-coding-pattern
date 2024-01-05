@@ -9,5 +9,6 @@
     // "experimentalDecorators": true
     // 브라우저에서 구문 분석 오류가 발생하는 경우 true로 설정
     // "useDefineForClassFields": true
-  }
+  },
+  "exclude": ["practice"]
 }
