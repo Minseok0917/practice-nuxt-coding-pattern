@@ -1,75 +1,46 @@
-# Nuxt 3 Minimal Starter
+##### Reference
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+- GoF : https://m.hanbit.co.kr/channel/category/category_view.html?cms_code=CMS8616098823
 
-## Setup
+### GoF(Gang of Four)
 
-Make sure to install the dependencies:
+GoF(Gang of Four) 디자인 패턴은 소프트웨어 엔지니어링에서 일반적인 문제를 해결하기 위해 재사용 가능한 형태로 정리한 솔루션들이다.  
+목적에 따라 생성패턴 5개, 구조 패턴 7개, 행위 패턴 11개, 총 23개의 패턴으로 구성된다.
 
-```bash
-# npm
-npm install
+#### 생성 패턴
 
-# pnpm
-pnpm install
+객체 생성에 관련된 패턴으로 클래스의 인스턴스화를 유연하는 패턴
 
-# yarn
-yarn install
+- 싱글턴 패턴
+- 팩터리 메소드 패턴
+- 추상 팩터리 패턴
+- 빌더 패턴
+- 프로토타입 패턴
 
-# bun
-bun install
-```
+#### 구조 패턴
 
-## Development Server
+클래스나 객체를 조합해 더 큰 구조를 만드는 패턴
 
-Start the development server on `http://localhost:3000`:
+- 프록시 패턴
+- 데코레이터 패턴
+- 어댑터 패턴
+- 브리지 패턴
+- 퍼사드 패턴
+- 복합체 패턴
+- 플라이웨이트 패턴
 
-```bash
-# npm
-npm run dev
+#### 행위 패턴
 
-# pnpm
-pnpm run dev
+객체 간의 통신을 책임지는 패턴, 객체들 사이의 책임 분배화 협력을 관리
 
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- 옵저버 패턴
+- 템플릿 메서드 패턴
+- 전략 패턴
+- 책임 연쇄 패턴
+- 상태 패턴
+- 반복자 패턴
+- 비지터 패턴
+- 메멘토 패턴
+- 커맨드 패턴
+- 인터프리터 패턴
+- 중재자 패턴
