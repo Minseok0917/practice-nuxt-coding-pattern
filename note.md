@@ -1,3 +1,47 @@
+#### 2024.01.08
+
+프론트엔드에서 빌더 패턴을 사용할 떄 고민의 여지가 생김...  
+처음에는 GPT한테 예제를 달라고하고 좀 고쳐봤음
+
+```ts
+class Student {
+  private name: string = "";
+  private age: number = 0;
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+  getName() {
+    return this.name;
+  }
+  getAge() {
+    return this.age;
+  }
+}
+class StudentBuilder {
+  private name: string = "";
+  private age: number = 0;
+  setName(name: string) {
+    this.name = name;
+    return this;
+  }
+  setAge(age: number) {
+    this.age = age;
+    return this;
+  }
+  builder() {
+    return new Student(this.name, this.age);
+  }
+}
+
+const student: Student = new StudentBuilder().setName("민석").setAge(21).builder();
+```
+
+위에 방법이 제일 간단한 빌드 패턴 방법이긴한데 몇 가지 케이스를 생각하면 고민사항이 생김
+
+1. Student 클래스 수정은?...
+2. name, age만 있지만 값이 더 많이지면 따로 분리되어있는 종속 프로퍼티인데 문제가 생기지 않을까?
+
 #### 2024.01.04 ~ 2024.01.05
 
 Vue에서 MVVM을 수행할 때는 Ref, Reactive 같은 반응성 객체가 필요한데  

@@ -4,24 +4,57 @@
   </div>
 </template>
 <script lang="ts" setup>
-class DeveloperInfo {
-  private static developerInfoInstance = new DeveloperInfo();
-  private name: string = "Minseok Jung";
-  private age: number = 21;
-
-  static getInstance(): DeveloperInfo {
-    return this.developerInfoInstance;
+class Student {
+  private name: string = "";
+  private age: number = 0;
+  constructor(builder: StudentBuilder) {
+    this.name = builder.name;
+    this.age = builder.age;
   }
-
-  getDeveloperInfo() {
-    return {
-      name: this.name,
-      age: this.age,
-    };
+  getName() {
+    return this.name;
+  }
+  getAge() {
+    return this.age;
   }
 }
 
-const UserA = DeveloperInfo.getInstance();
-const UserB = DeveloperInfo.getInstance();
-console.log(UserA === UserB, UserA.getDeveloperInfo());
+class StudentBuilder {
+  private name: string = "";
+  private age: number = 0;
+  setName(name: string) {
+    this.name = name;
+    return this;
+  }
+  setAge(age: number) {
+    this.age = age;
+    return this;
+  }
+  builder() {
+    return new Student(this);
+  }
+}
+
+class StudentA {
+  private name: string = "";
+  private age: number = 0;
+  getName() {
+    return this.name;
+  }
+  getAge() {
+    return this.age;
+  }
+  setName(name: string) {
+    this.name = name;
+    return this;
+  }
+  setAge(age: number) {
+    this.age = age;
+    return this;
+  }
+}
+
+const student = new StudentBuilder().setName("정민석").setAge(21).builder();
+
+new StudentA().setName("민석").setAge(21);
 </script>
