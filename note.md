@@ -39,8 +39,80 @@ const student: Student = new StudentBuilder().setName("민석").setAge(21).build
 
 위에 방법이 제일 간단한 빌드 패턴 방법이긴한데 몇 가지 케이스를 생각하면 고민사항이 생김
 
-1. Student 클래스 수정은?...
+1. Student 클래스 수정은?... 이후 불변성은?...
 2. name, age만 있지만 값이 더 많이지면 따로 분리되어있는 종속 프로퍼티인데 문제가 생기지 않을까?
+
+```java
+public class StudentConfig{
+  private String name;
+  private Number age;
+  private StudentConfig(Builder builder){
+    this.name = builder.name;
+    this.age = builder.age;
+  }
+  public static class Builder{
+    private static final String name;
+    private static final Number age;
+    public StudentConfig build(){
+      return new StudentConfig(this)
+    }
+    public Builder setName(String name){
+      this.name = name;
+      return this;
+    }
+    public Builder setAge(Number age){
+      this.age = age;
+      return this;
+    }
+  }
+}
+```
+
+<디자인 패턴의 아름다움> 책에서는 빌더 패턴을 예제를 이렇게 소개해주는데 자바 코드다.  
+자바에서는 클래스 안에 또 다른 클래스를 선언할 수 있어서 같은 클래스내에서는 `private` 이라도 데이터를 가져올 수 있나보다...  
+위에 코드의 포인트는 Builder의 build 함수에서 상위 클래스를 인스턴스로 만들면서 현재 인스턴스의 값을 this로 보내는거다.  
+그걸 StudentConfig 에서 받아서 단 하나의 매개변수로 builder 정보를 가져올 수 있어서 가독성이 매우 좋다고 말할 수 있다. (타쓰는 이게 어려움)
+
+```ts
+class Student {
+  private readonly name: string = "";
+  private readonly age: number = 0;
+  private constructor(builder: InstanceType<typeof Student.Builder>) {
+    this.name = builder.name;
+    this.age = builder.age;
+  }
+  public static Builder = class {
+    private _name: string = "";
+    private _age: number = 0;
+
+    public setName(name: string) {
+      this._name = name;
+      return this;
+    }
+    public setAge(age: number) {
+      this._age = age;
+      return this;
+    }
+    public build() {
+      return new Student(this);
+    }
+
+    public get name() {
+      return this._name;
+    }
+    public get age() {
+      return this._age;
+    }
+  };
+}
+
+const student = Student.Builder().setName("민석").setAge(21).build();
+console.log(student.name, student.age);
+```
+
+가독성을 좋게 하려면 namespace 로 Builder에 대한 타입 명시를 다시 할 수 있지만 생성자가 많이지면 그렇게 해야될 거 같기도 하다(아니면 처음부터 명시적 전략으로 가는것도 좋을지도)  
+위에 1, 2번 질문에 대한건 1번 같은 경우에는 수정해야되는 경우에 새로 만들어야되는거라 Builder를 실행해야되는 부분인거 같다. (수정과 불변성 해결)  
+2번에 해당하는 질문은 어쩔수 없는 부분이 있는거 같다. 결국 Builder 에서 가공해서 Student 객체에 추가항목이 생길수도 있는거다. 추상화 클래스, 인터페이스로도 해결할 수 없는 노릇이다...
 
 #### 2024.01.04 ~ 2024.01.05
 

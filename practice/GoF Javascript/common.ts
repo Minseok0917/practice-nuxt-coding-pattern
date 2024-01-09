@@ -33,30 +33,39 @@ console.log(developerInfoA === developerInfoB); // true
   빌더 패턴은 복잡한 객체의 생성 과정을 단계별로 분리한다.
 */
 class Student {
-  private name: string = "";
-  private age: number = -1;
-}
+  private readonly name: string = "";
+  private readonly age: number = 0;
+  private constructor(builder: InstanceType<typeof Student.Builder>) {
+    this.name = builder.name;
+    this.age = builder.age;
+  }
+  public static Builder = class {
+    private _name: string = "";
+    private _age: number = 0;
 
-class StudentBuilder {
-  private student: Student;
-  constructor() {
-    this.student = new Student();
-  }
-  setName(name: string) {
-    this.student.name = name;
-    return this;
-  }
-  setAge(age: number) {
-    this.student.age = age;
-    return this;
-  }
-  builder() {
-    return this.student;
-  }
+    public setName(name: string) {
+      this._name = name;
+      return this;
+    }
+    public setAge(age: number) {
+      this._age = age;
+      return this;
+    }
+    public build(): Student {
+      return new Student(this);
+    }
+
+    public get name() {
+      return this._name;
+    }
+    public get age() {
+      return this._age;
+    }
+  };
 }
 const students: Student[] = [
-  new StudentBuilder().setName("민석").setAge(21).builder(),
-  new StudentBuilder().setName("규량").setAge(21).builder(),
-  new StudentBuilder().setName("장혁").setAge(21).builder(),
+  new Student.Builder().setName("민석").setAge(21).build(),
+  new Student.Builder().setName("규량").setAge(21).build(),
+  new Student.Builder().setName("장혁").setAge(21).build(),
 ];
 /* ======================================================================= */
